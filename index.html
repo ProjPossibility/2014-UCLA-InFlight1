@@ -18,6 +18,11 @@
   </head>
 
   <script>
+
+    window.onbeforeunload = function (e) {
+        window.speechSynthesis.cancel();
+      };
+      
     var welcome_message = new SpeechSynthesisUtterance('Welcome to your accessible In-Flight Entertainment System. Please choose from the following.');
     var foo1 = new SpeechSynthesisUtterance('Movies');
     var foo2 = new SpeechSynthesisUtterance('Food');
