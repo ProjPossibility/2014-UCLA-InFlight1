@@ -20,6 +20,60 @@
   <script>
     var foo = new SpeechSynthesisUtterance('Movies, Food, Map');
     window.speechSynthesis.speak(foo);
+
+    var recording = false;
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+
+    recognition.onresult = function(event) {
+
+
+      var interim_transcript = event.results[0][0].transcript;
+      
+      switch(interim_transcript)
+      {
+        case 'movies':  
+          window.location.href = "movies.html"; 
+          break;
+        case 'food':
+          window.location.href = "food.html"; 
+          break;
+        case 'map':
+          window.location.href = "map.html"; 
+          break;
+
+      }
+
+     };
+
+    recognition.onerror = function(event) {
+
+      alert(event.error);
+    };
+
+
+
+    document.addEventListener('keydown', function(event) {
+
+      if(event.keyCode == 192) { //tilde
+
+        if(recording == false)
+        {
+          recognition.lang = 'en-US';
+          recognition.start();
+          recording = true;
+        }
+        else
+        {
+          recognition.stop();
+          recording = false;
+        }
+      }
+
+    });
+
   </script>
   <body>
 

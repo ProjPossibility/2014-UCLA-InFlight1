@@ -64,13 +64,19 @@
     <!--<script src="../bootstrap/js/docs.min.js"></script>-->
     <script>
 
+      window.onbeforeunload = function (e) {
+        window.speechSynthesis.cancel();
+      };
+
       window.speechSynthesis.cancel();
       var movie_titles = [];
       var movie_descriptions = [];
       var movie_ids = [];
 
-      // $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
-      $.getJSON( "moviedata.json", function( data ) {
+      var movie_links = [];
+
+      $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
+      //$.getJSON( "moviedata.json", function( data ) {
         var items = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
@@ -81,8 +87,8 @@
             items.push( "<div class=\"col-md-9\">" );
             items.push( "<h2 class= \"movie-title\">" + data.movies[i].title + "</h2>");
             items.push( "<p class=\"movie-description\">" + data.movies[i].description + "</p>");
-            items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
-            // items.push( "<a href=\"./get.html?target=" + data.movies[i].link + "\">Play Movie</a>" )
+            //items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
+            items.push( "<a href=\"./get.html?target=" + data.movies[i].link + "\">Play Movie</a>" )
             items.push( "</div>");
             items.push( "</div>");            
             items.push( "</div>");
@@ -91,6 +97,7 @@
             movie_titles.push(data.movies[i].title);
             movie_descriptions.push(data.movies[i].description);
             movie_ids.push(data.movies[i].id);
+            movie_links.push(data.movies[i].link);
         }
         // reads out movie descriptions and titles
         for (var i = 0; i < movie_titles.length; i++){
@@ -129,7 +136,7 @@
             flag = true;
             movie_selected_index += -1;
             break;
-          case 192: // tilde
+          case 81: // q
             window.speechSynthesis.cancel();
             break;
 
@@ -170,6 +177,55 @@
        }, 500);
             });
 
+    </script>
+    <script>
+
+      var recording = false;
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+
+      recognition.onresult = function(event) {
+
+
+        var interim_transcript = event.results[0][0].transcript;
+        
+        switch(interim_transcript)
+        {
+          case 'the wolf of Wall Street':  
+            window.location.href = "get.html?target=" + movie_links[1]; 
+            break;
+        }
+
+       };
+
+      recognition.onerror = function(event) {
+
+        alert(event.error);
+      };
+
+
+
+      document.addEventListener('keydown', function(event) {
+
+        if(event.keyCode == 192) { //tilde
+
+          if(recording == false)
+          {
+            window.speechSynthesis.cancel();
+            recognition.start();
+            recording = true;
+          }
+          else
+          {
+            recognition.stop();
+            recording = false;
+          }
+        }
+
+      });
     </script>
 
 
