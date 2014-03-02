@@ -14,8 +14,8 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
     
-    var image = 'http://i.imgur.com/MgrxTbx.gif?1';
-    //var image = 'http://www.clker.com/cliparts/F/d/p/v/T/k/plane.svg';
+    //var image = 'http://i.imgur.com/MgrxTbx.gif?1';
+    var image = 'http://i.imgur.com/13yDpT2.png?1?6956';
     
   marker = new google.maps.Marker({
     position: new google.maps.LatLng(34.9,-110),
