@@ -6,7 +6,7 @@ http.createServer(function (req, res) {
 	{	
 		var _get = url.parse(req.url, true).query;
 		res.writeHead(200, {'Content-Type':'text/plain'});
-		if(_get['data'] = "movies")
+		if(_get['data'] == "movies")
 		{
 			var ret = "{\"movies\":[\n";
 			var myDataRef = new firebase("https://burning-fire-5276.firebaseio.com/a");
@@ -16,7 +16,28 @@ http.createServer(function (req, res) {
 					ret += "{";
 					ret += "\"title\" : \""+ e.val()[i].title+ "\",\n";
 					ret += "\"description\" : \"" + e.val()[i].description + "\",\n";
-					ret += "\"picture\" : \"" + e.val()[i].picture + "\"\n";
+					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
+					ret += "}";
+					if(i != e.val().length-1)
+					{
+						ret += ",\n";
+					}
+				}
+
+				res.end(ret+"]}\n");
+			});
+		}
+		else if(_get['data'] == "food")
+		{
+			var ret = "{\"food\":[\n";
+			var myDataRef = new firebase("https://burning-fire-5276.firebaseio.com/food");
+			myDataRef.on('value', function(e) {
+				for(var i = 0; i < e.val().length; i++)
+				{
+					ret += "{";
+					ret += "\"name\" : \""+ e.val()[i].name+ "\",\n";
+					ret += "\"price\" : \"" + e.val()[i].price + "\",\n";
+					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
 					ret += "}";
 					if(i != e.val().length-1)
 					{
