@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Project name</a>
+              <a class="navbar-brand" href="#">Movies</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -75,6 +75,7 @@
     <script>
       $.getJSON( "./moviedata.json", function( data ) {
         var items = [];
+        var movie_titles = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
             items.push( "<div class=\"row featurette\">" );
@@ -86,6 +87,9 @@
             items.push( "<p class=\"movie-description\">" + data.movies[i].description + "</p>");
             items.push( "</div>");
             items.push( "</div>");
+
+            movie_titles.push(new SpeechSynthesisUtterance(data.movies[i].title));
+            // window.speechSynthesis(voice_title);
         }
         $("<div/>", {
           "class": "row featurette",
