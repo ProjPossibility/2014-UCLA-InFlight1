@@ -18,8 +18,69 @@
   </head>
 
   <script>
-    var foo = new SpeechSynthesisUtterance('Movies, Food, Map');
-    window.speechSynthesis.speak(foo);
+    var welcome_message = new SpeechSynthesisUtterance('Welcome to your accessible In-Flight Entertainment System. Please choose from the following.');
+    var foo1 = new SpeechSynthesisUtterance('Movies');
+    var foo2 = new SpeechSynthesisUtterance('Food');
+    var foo3 = new SpeechSynthesisUtterance('Map');
+
+    window.speechSynthesis.speak(welcome_message);
+    setTimeout(function(){window.speechSynthesis.speak(foo1);}, 500);
+    setTimeout(function(){window.speechSynthesis.speak(foo2);}, 1000);
+    setTimeout(function(){window.speechSynthesis.speak(foo3);}, 1000);
+
+    var recording = false;
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+
+    recognition.onresult = function(event) {
+
+
+      var interim_transcript = event.results[0][0].transcript;
+      
+      switch(interim_transcript)
+      {
+        case 'movies':  
+          window.location.href = "movies.html"; 
+          break;
+        case 'food':
+          window.location.href = "food.html"; 
+          break;
+        case 'map':
+          window.location.href = "map.html"; 
+          break;
+
+      }
+
+     };
+
+    recognition.onerror = function(event) {
+
+      alert(event.error);
+    };
+
+
+
+    document.addEventListener('keydown', function(event) {
+
+      if(event.keyCode == 192) { //tilde
+
+        if(recording == false)
+        {
+          recognition.lang = 'en-US';
+          recognition.start();
+          recording = true;
+        }
+        else
+        {
+          recognition.stop();
+          recording = false;
+        }
+      }
+
+    });
+
   </script>
   <body>
 
@@ -38,6 +99,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="./index.html">Home</a></li>
             <li><a href="./movies.html">Movies</a></li>
+	    <li><a href="./food.html">Food</a></li>
 
           </ul>
         </div><!--/.nav-collapse -->
@@ -53,10 +115,11 @@
         </a>
       </div>
       <div class="row">
-        <div class="col-md-12 btn btn-xlarge">Food</div>
+	<a href="./food.html">
+        <div class="col-md-12 btn btn-xlarge">Food</div></a>
       </div>
       <div class="row">
-        <a href="https://maps.google.com">
+        <a href="./map/map.html">
           <div class="col-md-12 btn btn-xlarge">
             Maps
           </div>
