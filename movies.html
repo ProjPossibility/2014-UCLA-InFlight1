@@ -63,6 +63,7 @@
     <!--<script src="../bootstrap/js/docs.min.js"></script>-->
     <script>
 
+      window.speechSynthesis.cancel();
       var movie_titles = [];
       var movie_descriptions = [];
 
@@ -102,48 +103,52 @@
       });
       console.log(movie_titles);
   
-      var movie_selected_index = -1;
-      var flag = true;
-      document.addEventListener('click', function (event){
-        window.speechSynthesis.cancel();
-      })
+      var movie_selected_index = 0;
+      var flag = false;
+
+      var voice_title = new SpeechSynthesisUtterance();
+
+      
       document.addEventListener('keydown', function(event){
+
+
         switch(event.keyCode)
         {
           case 40: // arrow key down
-            if(movie_selected_index != 0)
-            {
-              movie_selected_index += 1;
-              if (flag)
-              {
-                window.speechSynthesis.cancel();
-                flag = false;
-              }
-            }
+            flag = true;
+            movie_selected_index += 1;
             break;
           case 38: // arrow key up
-            if(movie_selected_index != movie_titles.length-1)
-            {
-              movie_selected_index += -1;
-              flag = true;
-            }
+            flag = true;
+            movie_selected_index += -1;
+            break;
+          case 192: // tilde
+            window.speechSynthesis.cancel();
+            break;
+
         }
-      //       break;
-      //     default:
-      //       flag = false;
-      //       break;
-      //   }
-      //   if (flag){
-      //     window.speechSynthesis.pause();
-      //     window.speechSynthesis.cancel();
+        if(flag)
+        {
+          flag = false;
+          if(movie_selected_index < 0)
+          {
+            movie_selected_index = 0;
+          }
+          if(movie_selected_index > movie_titles.length-1)
+          {
+            movie_selected_index = movie_titles.length-1;
+          }
 
-      //     var voice_title = new SpeechSynthesisUtterance(movie_titles[movie_selected_index]);
-      //     var voice_desc  = new SpeechSynthesisUtterance(movie_descriptions[movie_selected_index]);
-      //     window.speechSynthesis.speak(voice_title);
-      //     window.speechSynthesis.speak(voice_desc);
+          window.speechSynthesis.cancel();
 
-      //   }
-      })
+          voice_title.text = movie_titles[movie_selected_index] + '; ' + movie_descriptions[movie_selected_index];
+          
+
+          window.speechSynthesis.speak(voice_title);
+
+        } 
+
+      });
     </script>
 
 
