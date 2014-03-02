@@ -5,7 +5,7 @@ http.createServer(function (req, res) {
 	req.on("end", function()
 	{	
 		var _get = url.parse(req.url, true).query;
-		res.writeHead(200, {'Content-Type':'text/plain'});
+		res.writeHead(200, {'Content-Type':'text/plain', "Access-Control-Allow-Origin":"*"});
 		if(_get['data'] == "movies")
 		{
 			var ret = "{\"movies\":[\n";
@@ -17,6 +17,7 @@ http.createServer(function (req, res) {
 					ret += "\"id\" : " + i.toString() + ",\n";
 					ret += "\"title\" : \""+ e.val()[i].title+ "\",\n";
 					ret += "\"description\" : \"" + e.val()[i].description + "\",\n";
+					ret += "\"link\" : \"" + e.val()[i].link+"\",\n";
 					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
 					ret += "}";
 					if(i != e.val().length-1)
@@ -52,5 +53,5 @@ http.createServer(function (req, res) {
 		}
 	});
 	req.resume();
-}).listen(1337, '127.0.0.1');
+}).listen(1337);
 console.log('Server running at http://127.0.0.1:1337/');
