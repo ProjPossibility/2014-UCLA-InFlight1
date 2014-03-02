@@ -1,0 +1,16 @@
+{"movies":[
+{"id" : 0,
+"title" : "The Lego Movie",
+"description" : "An ordinary LEGO minifigure, mistakenly thought to be the extraordinary MasterBuilder, is recruited to join a quest to stop an evil LEGO tyrant from gluing the universe together.",
+"image" : "ia.media-imdb.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzlyNjg3MDE@._V1_SX214_.jpg"
+},
+{"id" : 1,
+"title" : "The Wolf of Wall Street",
+"description" : "Based on the true story of Jordan Belfort, from his rise to a wealthy stockbroker living the high life to his fall involving crime, corruption and the federal government.",
+"image" : "http://ia.media-imdb.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SX214_.jpg"
+},
+{"id" : 2,
+"title" : "Frozen",
+"description" : "Fearless optimist Anna teams up with Kristoff in an epic journey, encountering Everest-lie conditions, and a hilarious snowman named Olaf in a race to find Anna's sister Elsa, whose icy powers have trapped the kingdom in eternal winter.",
+"image" : "img3.wikia.nocookie.net/__cb20121002122858/disney/images/5/58/Frozen-movie-poster.jpg"
+}]}

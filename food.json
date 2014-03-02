@@ -1,0 +1,11 @@
+{"food":[
+{"id" : 0,
+"name" : "Ham and Egg Sandwich",
+"price" : "3.95",
+"image" : "http://images.topix.com/gallery/up-0CR8M6K8FKD5843c.jpg"
+},
+{"id" : 1,
+"name" : "Chicken Noodle Soup",
+"price" : "3.50",
+"image" : "foodimentaryguy.files.wordpress.com/2012/03/chicken-noodle-soup-604x334_0.jpg"
+}]}
