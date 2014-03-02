@@ -66,7 +66,7 @@
       var movie_titles = [];
       var movie_descriptions = [];
 
-      $.getJSON( "./moviedata.json", function( data ) {
+      $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
         var items = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
