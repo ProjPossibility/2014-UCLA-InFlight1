@@ -71,11 +71,13 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script src="../bootstrap/js/docs.min.js"></script>
+    <!--<script src="../bootstrap/js/docs.min.js"></script>-->
     <script>
+
+      var movie_titles = [];
+      var movie_descriptions = [];
       $.getJSON( "./moviedata.json", function( data ) {
         var items = [];
-        var movie_titles = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
             items.push( "<div class=\"row featurette\">" );
@@ -88,16 +90,26 @@
             items.push( "</div>");
             items.push( "</div>");
 
-            movie_titles.push(new SpeechSynthesisUtterance(data.movies[i].title));
-            // window.speechSynthesis(voice_title);
+            movie_titles.push(data.movies[i].title);
+            movie_descriptions.push(data.movies[i].description);
         }
+
+
+      console.log(movie_titles.length)
+      for (var i = 0; i < movie_titles.length; i++){
+        var voice_title = new SpeechSynthesisUtterance(movie_titles[i]);
+        var voice_desc  = new SpeechSynthesisUtterance(movie_descriptions[i]);
+        window.speechSynthesis.speak(voice_title);
+        window.speechSynthesis.speak(voice_desc);
+      }
+
+
         $("<div/>", {
           "class": "row featurette",
           html: items.join("")
         }).appendTo("#movie-list");
 
       });
-
     </script>
 
 
