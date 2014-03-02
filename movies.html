@@ -77,6 +77,9 @@
       var movie_ids = [];
       var movie_links = [];
 
+      var welcome_message = new SpeechSynthesisUtterance('Here are you currently available movies');
+      window.speechSynthesis.speak(welcome_message);
+
       $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
       //$.getJSON( "moviedata.json", function( data ) {
         var items = [];
