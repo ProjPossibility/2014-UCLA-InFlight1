@@ -4,7 +4,6 @@ body {
 .starter-template {
   padding: 40px 15px;
   text-align: center;
-  background-color: lightblue;
 }
 .row {
   margin-top: 20px;
@@ -30,4 +29,9 @@ body {
 
 .movie-description {
 	font-size: 30px;
+}
+
+footer {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
