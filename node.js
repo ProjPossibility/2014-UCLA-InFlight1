@@ -14,6 +14,7 @@ http.createServer(function (req, res) {
 				for(var i = 0; i < e.val().length; i++)
 				{
 					ret += "{";
+					ret += "\"id\" : " + i.toString() + ",\n";
 					ret += "\"title\" : \""+ e.val()[i].title+ "\",\n";
 					ret += "\"description\" : \"" + e.val()[i].description + "\",\n";
 					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
@@ -35,6 +36,7 @@ http.createServer(function (req, res) {
 				for(var i = 0; i < e.val().length; i++)
 				{
 					ret += "{";
+					ret += "\"id\" : " + i.toString() + ",\n";
 					ret += "\"name\" : \""+ e.val()[i].name+ "\",\n";
 					ret += "\"price\" : \"" + e.val()[i].price + "\",\n";
 					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
