@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Movies</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/movie.css" rel="stylesheet">
+  </head>
+
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="./index.html">In Flight Entertainment</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="./index.html">Home</a></li>
+                <li class="active"><a href="./movies.html">Movies</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container" id="movie-list">
+
+    </div><!-- /.container -->
+    <hr class="featurette-divider">
+    <footer></footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="../bootstrap/js/docs.min.js"></script>-->
+    <script>
+
+      window.onbeforeunload = function (e) {
+        window.speechSynthesis.cancel();
+      };
+
+      window.speechSynthesis.cancel();
+      var food_names = [];
+      var food_prices = [];
+      var food_ids = [];
+
+      var food_links = [];
+
+      $.getJSON( "http://localhost:1337/?data=food", function( data ) {
+      //$.getJSON( "fooddata.json", function( data ) {
+        var items = [];
+        for (var i = 0; i < data.food.length; i++){
+            items.push( "<hr class=\"featurette-divider\">" );
+            items.push( "<div class=\"row featurette food-entry\" id=\"food-id-" + data.food[i].id + "\">" );
+            items.push( "<div class=\"col-md-3\">" );
+            items.push( "<img class=\"featurette-image\" src=\"" + data.food[i].image + "\">" );
+            items.push( "</div>");
+            items.push( "<div class=\"col-md-9\">" );
+            items.push( "<h2 class= \"food-name\">" + data.food[i].name + "</h2>");
+            items.push( "<p class=\"food-price\">$" + data.food[i].price + "</p>");
+            //items.push( "<a href=\"" + data.foods[i].video + "\">Play Movie</a>" )
+            items.push( "<a href=\"\">Order Now</a>" )
+            items.push( "</div>");
+            items.push( "</div>");            
+            items.push( "</div>");
+            items.push( "</div>");
+
+            food_names.push(data.food[i].name);
+	    if(i == 0)
+	    {
+            	food_prices.push("three dollars and ninety-five cents");
+	    }
+	else
+	{
+		food_prices.push("three dollars and fifty cents");
+	}
+            food_ids.push(data.food[i].id);
+            food_links.push(data.food[i].link);
+        }
+        // reads out food descriptions and titles
+        for (var i = 0; i < food_names.length; i++){
+          var voice_title = new SpeechSynthesisUtterance(food_names[i]);
+          var voice_desc  = new SpeechSynthesisUtterance(food_prices[i]);
+          window.speechSynthesis.speak(voice_title);
+          window.speechSynthesis.speak(voice_desc);
+        }
+
+        // adds food poster, title, description to page
+        $("<div/>", {
+          "class": "row featurette",
+          html: items.join("")
+        }).appendTo("#movie-list");
+        $("#movie-id-0").addClass("active");
+
+
+      });
+      console.log(food_names);
+  
+      var food_selected_index = 0;
+      var flag = false;
+      var voice_title = new SpeechSynthesisUtterance();
+
+      
+      document.addEventListener('keydown', function(event){
+
+
+        switch(event.keyCode)
+        {
+          case 40: // arrow key down
+            flag = true;
+            food_selected_index += 1;
+            break;
+	  case 37:
+	    window.history.back();
+	    break;
+          case 38: // arrow key up
+            flag = true;
+            food_selected_index += -1;
+            break;
+          case 81: // q
+            window.speechSynthesis.cancel();
+            break;
+
+        }
+        if(flag)
+        {
+          flag = false;
+          if(food_selected_index < 0)
+          {
+            food_selected_index = 0;
+          }
+          if(food_selected_index > food_names.length-1)
+          {
+            food_selected_index = food_names.length-1;
+          }
+
+          window.speechSynthesis.cancel();
+
+          voice_title.text = food_names[food_selected_index] + "; " + food_prices[food_selected_index];
+          
+
+          window.speechSynthesis.speak(voice_title);
+          for (var i = 0; i < food_ids.length; i++)
+          {
+            if (food_ids[i] == food_selected_index) {
+              $("#movie-id-" + food_ids[i]).addClass("active");
+            } 
+            else { 
+              $("#movie-id-" + food_ids[i]).removeClass("active");
+
+            }
+
+          }
+
+        } 
+      $('html, body').animate({
+          scrollTop: $(".movie-entry.active").offset().top
+       }, 500);
+            });
+
+    </script>
+    <script>
+
+      var recording = false;
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+
+      recognition.onresult = function(event) {
+
+
+        var interim_transcript = event.results[0][0].transcript;
+        
+        switch(interim_transcript)
+        {
+          case 'the wolf of Wall Street':  
+            window.location.href = "get.html?target=" + food_links[1]; 
+            break;
+        }
+
+       };
+
+      recognition.onerror = function(event) {
+
+        alert(event.error);
+      };
+
+
+
+      document.addEventListener('keydown', function(event) {
+
+        if(event.keyCode == 192) { //tilde
+
+          if(recording == false)
+          {
+            window.speechSynthesis.cancel();
+            recognition.start();
+            recording = true;
+          }
+          else
+          {
+            recognition.stop();
+            recording = false;
+          }
+        }
+
+      });
+    </script>
+
+
+  </body>
+</html>
