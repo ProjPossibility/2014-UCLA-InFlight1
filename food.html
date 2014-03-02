@@ -13,7 +13,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/movie.css" rel="stylesheet">
+    <link href="./css/movies.css" rel="stylesheet">
   </head>
 
 <!-- NAVBAR
@@ -71,7 +71,7 @@
       window.speechSynthesis.cancel();
       var food_names = [];
       var food_prices = [];
-      var food_ids = [];
+      var movie_ids = [];
 
       var food_links = [];
 
@@ -80,7 +80,7 @@
         var items = [];
         for (var i = 0; i < data.food.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
-            items.push( "<div class=\"row featurette food-entry\" id=\"food-id-" + data.food[i].id + "\">" );
+            items.push( "<div class=\"row featurette movie-entry\" id=\"movie-id-" + data.food[i].id + "\">" );
             items.push( "<div class=\"col-md-3\">" );
             items.push( "<img class=\"featurette-image\" src=\"" + data.food[i].image + "\">" );
             items.push( "</div>");
@@ -103,7 +103,7 @@
 	{
 		food_prices.push("three dollars and fifty cents");
 	}
-            food_ids.push(data.food[i].id);
+            movie_ids.push(data.food[i].id);
             food_links.push(data.food[i].link);
         }
         // reads out food descriptions and titles
@@ -169,13 +169,13 @@
           
 
           window.speechSynthesis.speak(voice_title);
-          for (var i = 0; i < food_ids.length; i++)
+          for (var i = 0; i < movie_ids.length; i++)
           {
-            if (food_ids[i] == food_selected_index) {
-              $("#movie-id-" + food_ids[i]).addClass("active");
+            if (movie_ids[i] == food_selected_index) {
+              $("#movie-id-" + movie_ids[i]).addClass("active");
             } 
             else { 
-              $("#movie-id-" + food_ids[i]).removeClass("active");
+              $("#movie-id-" + movie_ids[i]).removeClass("active");
 
             }
 
