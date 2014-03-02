@@ -35,8 +35,8 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="./index.html">Home</a></li>
-                <li class="active"><a href="./movies.html">Movies</a></li>
-		<li><a href="./food.html">Food</a></li>
+                <li><a href="./movies.html">Movies</a></li>
+		<li class="active"><a href="./food.html">Food</a></li>
                   </ul>
                 </li>
               </ul>
@@ -70,45 +70,52 @@
       };
 
       window.speechSynthesis.cancel();
-      var movie_titles = [];
-      var movie_descriptions = [];
+      var food_names = [];
+      var food_prices = [];
       var movie_ids = [];
 
-      var movie_links = [];
+      var food_links = [];
 
-      $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
-      //$.getJSON( "moviedata.json", function( data ) {
+      $.getJSON( "http://localhost:1337/?data=food", function( data ) {
+      //$.getJSON( "fooddata.json", function( data ) {
         var items = [];
-        for (var i = 0; i < data.movies.length; i++){
+        for (var i = 0; i < data.food.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
-            items.push( "<div class=\"row featurette movie-entry\" id=\"movie-id-" + data.movies[i].id + "\">" );
+            items.push( "<div class=\"row featurette movie-entry\" id=\"movie-id-" + data.food[i].id + "\">" );
             items.push( "<div class=\"col-md-3\">" );
-            items.push( "<img class=\"featurette-image\" src=\"" + data.movies[i].image + "\">" );
+            items.push( "<img class=\"featurette-image\" src=\"" + data.food[i].image + "\">" );
             items.push( "</div>");
             items.push( "<div class=\"col-md-9\">" );
-            items.push( "<h2 class= \"movie-title\">" + data.movies[i].title + "</h2>");
-            items.push( "<p class=\"movie-description\">" + data.movies[i].description + "</p>");
-            //items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
-            items.push( "<a href=\"./get.html?target=" + data.movies[i].link + "\">Play Movie</a>" )
+            items.push( "<h2 class= \"food-name\">" + data.food[i].name + "</h2>");
+            items.push( "<p class=\"food-price\">$" + data.food[i].price + "</p>");
+            //items.push( "<a href=\"" + data.foods[i].video + "\">Play Movie</a>" )
+            items.push( "<a href=\"\">Order Now</a>" )
             items.push( "</div>");
             items.push( "</div>");            
             items.push( "</div>");
             items.push( "</div>");
 
-            movie_titles.push(data.movies[i].title);
-            movie_descriptions.push(data.movies[i].description);
-            movie_ids.push(data.movies[i].id);
-            movie_links.push(data.movies[i].link);
+            food_names.push(data.food[i].name);
+	    if(i == 0)
+	    {
+            	food_prices.push("three dollars and ninety-five cents");
+	    }
+	else
+	{
+		food_prices.push("three dollars and fifty cents");
+	}
+            movie_ids.push(data.food[i].id);
+            food_links.push(data.food[i].link);
         }
-        // reads out movie descriptions and titles
-        for (var i = 0; i < movie_titles.length; i++){
-          var voice_title = new SpeechSynthesisUtterance(movie_titles[i]);
-          var voice_desc  = new SpeechSynthesisUtterance(movie_descriptions[i]);
+        // reads out food descriptions and titles
+        for (var i = 0; i < food_names.length; i++){
+          var voice_title = new SpeechSynthesisUtterance(food_names[i]);
+          var voice_desc  = new SpeechSynthesisUtterance(food_prices[i]);
           window.speechSynthesis.speak(voice_title);
           window.speechSynthesis.speak(voice_desc);
         }
 
-        // adds movie poster, title, description to page
+        // adds food poster, title, description to page
         $("<div/>", {
           "class": "row featurette",
           html: items.join("")
@@ -117,9 +124,9 @@
 
 
       });
-      console.log(movie_titles);
+      console.log(food_names);
   
-      var movie_selected_index = 0;
+      var food_selected_index = 0;
       var flag = false;
       var voice_title = new SpeechSynthesisUtterance();
 
@@ -131,18 +138,15 @@
         {
           case 40: // arrow key down
             flag = true;
-            movie_selected_index += 1;
+            food_selected_index += 1;
             break;
 	  case 37:
 	    window.history.back();
 	    break;
           case 38: // arrow key up
             flag = true;
-            movie_selected_index += -1;
+            food_selected_index += -1;
             break;
-	  case 39:
-	    window.location = "./get.html?target="+ movie_links[movie_selected_index];
-	    break;
           case 81: // q
             window.speechSynthesis.cancel();
             break;
@@ -151,24 +155,24 @@
         if(flag)
         {
           flag = false;
-          if(movie_selected_index < 0)
+          if(food_selected_index < 0)
           {
-            movie_selected_index = 0;
+            food_selected_index = 0;
           }
-          if(movie_selected_index > movie_titles.length-1)
+          if(food_selected_index > food_names.length-1)
           {
-            movie_selected_index = movie_titles.length-1;
+            food_selected_index = food_names.length-1;
           }
 
           window.speechSynthesis.cancel();
 
-          voice_title.text = movie_titles[movie_selected_index] + '; ' + movie_descriptions[movie_selected_index];
+          voice_title.text = food_names[food_selected_index] + "; " + food_prices[food_selected_index];
           
 
           window.speechSynthesis.speak(voice_title);
           for (var i = 0; i < movie_ids.length; i++)
           {
-            if (movie_ids[i] == movie_selected_index) {
+            if (movie_ids[i] == food_selected_index) {
               $("#movie-id-" + movie_ids[i]).addClass("active");
             } 
             else { 
@@ -202,7 +206,7 @@
         switch(interim_transcript)
         {
           case 'the wolf of Wall Street':  
-            window.location.href = "get.html?target=" + movie_links[1]; 
+            window.location.href = "get.html?target=" + food_links[1]; 
             break;
         }
 
