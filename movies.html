@@ -69,8 +69,8 @@
       var movie_descriptions = [];
       var movie_ids = [];
 
-      // $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
-      $.getJSON( "moviedata.json", function( data ) {
+      $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
+      // $.getJSON( "moviedata.json", function( data ) {
         var items = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
@@ -81,8 +81,8 @@
             items.push( "<div class=\"col-md-9\">" );
             items.push( "<h2 class= \"movie-title\">" + data.movies[i].title + "</h2>");
             items.push( "<p class=\"movie-description\">" + data.movies[i].description + "</p>");
-            items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
-            // items.push( "<a href=\"./get.html?target=" + data.movies[i].link + "\">Play Movie</a>" )
+            // items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
+            items.push( "<a href=\"./get.html?target=" + data.movies[i].link + "\">Play Movie</a>" )
             items.push( "</div>");
             items.push( "</div>");            
             items.push( "</div>");
@@ -93,7 +93,7 @@
             movie_ids.push(data.movies[i].id);
         }
         // reads out movie descriptions and titles
-        for (var i = 0; i < movie_titles.length; i++){
+        for (var i = 0; i < 1; i++){
           var voice_title = new SpeechSynthesisUtterance(movie_titles[i]);
           var voice_desc  = new SpeechSynthesisUtterance(movie_descriptions[i]);
           window.speechSynthesis.speak(voice_title);
