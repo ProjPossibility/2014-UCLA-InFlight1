@@ -18,8 +18,15 @@
   </head>
 
   <script>
-    var foo = new SpeechSynthesisUtterance('Movies, Food, Map');
-    window.speechSynthesis.speak(foo);
+    var welcome_message = new SpeechSynthesisUtterance('Welcome to your accessible In-Flight Entertainment System. Please choose from the following.');
+    var foo1 = new SpeechSynthesisUtterance('Movies');
+    var foo2 = new SpeechSynthesisUtterance('Food');
+    var foo3 = new SpeechSynthesisUtterance('Map');
+
+    window.speechSynthesis.speak(welcome_message);
+    setTimeout(function(){window.speechSynthesis.speak(foo1);}, 500);
+    setTimeout(function(){window.speechSynthesis.speak(foo2);}, 1000);
+    setTimeout(function(){window.speechSynthesis.speak(foo3);}, 1000);
 
     var recording = false;
     var recognition = new webkitSpeechRecognition();
@@ -110,7 +117,7 @@
         <div class="col-md-12 btn btn-xlarge">Food</div>
       </div>
       <div class="row">
-        <a href="https://maps.google.com">
+        <a href="./map/map.html">
           <div class="col-md-12 btn btn-xlarge">
             Maps
           </div>
