@@ -9,10 +9,11 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title>Carousel Template for Bootstrap</title>
+    <title>Movies</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/movies.css" rel="stylesheet">
   </head>
 
 <!-- NAVBAR
@@ -66,26 +67,33 @@
       window.speechSynthesis.cancel();
       var movie_titles = [];
       var movie_descriptions = [];
+      var movie_ids = [];
 
       $.getJSON( "./moviedata.json", function( data ) {
         var items = [];
         for (var i = 0; i < data.movies.length; i++){
             items.push( "<hr class=\"featurette-divider\">" );
-            items.push( "<div class=\"row featurette\">" );
+            items.push( "<div class=\"row featurette movie-entry\" id=\"movie-id-" + data.movies[i].id + "\">" );
             items.push( "<div class=\"col-md-3\">" );
             items.push( "<img class=\"featurette-image\" src=\"" + data.movies[i].image + "\">" );
             items.push( "</div>");
             items.push( "<div class=\"col-md-9\">" );
             items.push( "<h2 class= \"movie-title\">" + data.movies[i].title + "</h2>");
             items.push( "<p class=\"movie-description\">" + data.movies[i].description + "</p>");
+            items.push( "<div class=\"row\">");
+            items.push( "<div class=\"col-md-6\">");
             items.push( "<a href=\"" + data.movies[i].video + "\">Play Movie</a>" )
+            items.push( "</div>");
+            items.push( "<div class=\"col-md-6\">");
+            items.push( "</div>");
+            items.push( "</div>");            
             items.push( "</div>");
             items.push( "</div>");
 
             movie_titles.push(data.movies[i].title);
             movie_descriptions.push(data.movies[i].description);
+            movie_ids.push(data.movies[i].id);
         }
-
         // reads out movie descriptions and titles
         for (var i = 0; i < movie_titles.length; i++){
           var voice_title = new SpeechSynthesisUtterance(movie_titles[i]);
@@ -99,13 +107,14 @@
           "class": "row featurette",
           html: items.join("")
         }).appendTo("#movie-list");
+        $("#movie-id-0").addClass("active");
+
 
       });
       console.log(movie_titles);
   
       var movie_selected_index = 0;
       var flag = false;
-
       var voice_title = new SpeechSynthesisUtterance();
 
       
@@ -145,10 +154,24 @@
           
 
           window.speechSynthesis.speak(voice_title);
+          for (var i = 0; i < movie_ids.length; i++)
+          {
+            if (movie_ids[i] == movie_selected_index) {
+              $("#movie-id-" + movie_ids[i]).addClass("active");
+            } 
+            else { 
+              $("#movie-id-" + movie_ids[i]).removeClass("active");
+
+            }
+
+          }
 
         } 
+      $('html, body').animate({
+          scrollTop: $(".movie-entry.active").offset().top
+       }, 500);
+            });
 
-      });
     </script>
 
 

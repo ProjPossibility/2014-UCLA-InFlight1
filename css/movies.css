@@ -1,0 +1,14 @@
+.movie-entry.active {
+  border: solid;
+  border-color: orange;
+}
+
+footer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.play-movie-link {
+  text-align: center;
+}
+
