@@ -17,6 +17,7 @@ http.createServer(function (req, res) {
 					ret += "\"id\" : " + i.toString() + ",\n";
 					ret += "\"title\" : \""+ e.val()[i].title+ "\",\n";
 					ret += "\"description\" : \"" + e.val()[i].description + "\",\n";
+					ret += "\"link\" : \"" + e.val()[i].link+"\",\n";
 					ret += "\"image\" : \"" + e.val()[i].picture + "\"\n";
 					ret += "}";
 					if(i != e.val().length-1)
