@@ -43,6 +43,8 @@
 
 
       var interim_transcript = event.results[0][0].transcript;
+
+      console.log(interim_transcript);
       
       switch(interim_transcript)
       {
@@ -74,6 +76,7 @@
         if(recording == false)
         {
           recognition.lang = 'en-US';
+          window.speechSynthesis.cancel();
           recognition.start();
           recording = true;
         }
