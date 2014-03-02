@@ -139,6 +139,9 @@
             flag = true;
             movie_selected_index += -1;
             break;
+	  case 39:
+	    window.location = "./get.html?target="+ movie_links[movie_selected_index];
+	    break;
           case 81: // q
             window.speechSynthesis.cancel();
             break;
