@@ -6,10 +6,10 @@ A client/server system similar to Virgin America’s Red and others, which is ac
 Team Members
 ============
 
-Howard Lee
-Steven Ly
-William Seto
-Simon Zou
+- Howard Lee
+- Steven Ly
+- William Seto
+- Simon Zou
 
 To Run the Demo
 ===============
@@ -17,5 +17,6 @@ To Run the Demo
 - clone the directory
 - navigate to the directory
 - Run python and node server
-	python -m SimpleHTTPServer
-	node node.js
+
+		python -m SimpleHTTPServer
+		node node.js
