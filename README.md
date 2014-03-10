@@ -14,6 +14,7 @@ Team Members
 To Run the Demo
 ===============
 
+- Requires python (for web server), firebase, and nodejs
 - clone the directory
 - navigate to the directory
 - Run python and node server
