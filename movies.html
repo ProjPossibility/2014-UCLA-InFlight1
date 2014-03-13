@@ -77,7 +77,7 @@
       var movie_ids = [];
       var movie_links = [];
 
-      var welcome_message = new SpeechSynthesisUtterance('Here are you currently available movies');
+      var welcome_message = new SpeechSynthesisUtterance('Here are your currently available movies');
       window.speechSynthesis.speak(welcome_message);
 
       $.getJSON( "http://localhost:1337/?data=movies", function( data ) {
@@ -205,7 +205,7 @@
         
 	for(var i = 0; i < movie_titles.length; i++)
 	{
-        	if(interim_transcript == movie_titles[i])
+        	if(interim_transcript.toLowerCase() == movie_titles[i].toLowerCase())
 		{
         	    window.location.href = "get.html?target=" + movie_links[i]; 
         	    break;
